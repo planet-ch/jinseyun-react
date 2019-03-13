@@ -1,13 +1,17 @@
 import React from 'react';
 import ListItem from './../components/listItem';
+import numbers from './../data/number';
 class Number extends React.Component {
+    
     render() {
-        const numbers = this.props.numbers;
         const listItems = numbers.map((number) =>
-            <ListItem key={number.toString()} value={number}/>
+            <ListItem key={number.toString()} value={number} />
         );
         return (
-            <ul>{listItems}</ul>
+            <div className="box">
+                <ul>{listItems}</ul>
+                <div className="toNew" onClick={this.toNew}>点我</div>
+            </div>
         );
     }
 }
