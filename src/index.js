@@ -1,71 +1,32 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// import './index.css';
-// import products from './data/products';
-// import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-// // import App from './App';
-// // import Clock from './page/one';
-// // import Click from './page/two';
-// import Login from './page/loginThree';
-// import Number from './page/number';
-// import FormFive from './page/formFive';
-// import Select from './page/select';
-// import ATobShow from './page/aTobShow';
-// import ShopList from './page/shopList';
-// import AuthExample from './page/what';
-// import AnimationExample from './page/colorRouter';
-// import * as serviceWorker from './serviceWorker';
-
-// ReactDOM.render(
-//     (
-//         <Router>
-//             <div>
-//                 <nav>
-//                     <ul>
-//                         <li>
-//                             <Link to="/FormFive">FormFive</Link>
-//                         </li>
-//                         <li>
-//                             <Link to="/FormFive/o">FormFiveo</Link>
-//                         </li>
-//                         <li>
-//                             <Link to="/FormFive/or">FormFiveo2</Link>
-//                         </li>
-//                         <li>
-//                             <Link to="/ATobShow">ATobShow</Link>
-//                         </li>
-//                         <li>
-//                             <Link to="/Number">Number</Link>
-//                         </li>
-//                     </ul>
-//                 </nav>
-//                 <Route exact  path="/FormFive" component={FormFive} />
-//                 <Route path="/FormFive/:name" component={Select} />
-//                 <Route path="/ATobShow" component={ATobShow} />
-//                 <Route path="/AuthExample" component={AuthExample} />
-//                 {/* <Route component={AnimationExample} /> */}
-//             </div>
-//         </Router>
-//     ), document.getElementById('root')
-// );
-
-// // If you want your app to work offline and load faster, you can change
-// // unregister() to register() below. Note this comes with some pitfalls.
-// // Learn more about service workers: https://bit.ly/CRA-PWA
-// serviceWorker.unregister();
-
 import React from 'react'
-import { render } from 'react-dom'
-import { Provider } from 'react-redux'
-import { createStore } from 'redux'
-import todoApp from './store/reducers'
-import App from './page/App'
+import configureStore from './store'
+import ReactDOM from 'react-dom';
+import Route from './router';
+import FastClick from 'fastclick';
+import { AppContainer } from 'react-hot-loader';
+import {Provider} from 'react-redux';
 
-let store = createStore(todoApp)
+FastClick.attach(document.body);
+const store = configureStore()
 
-render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
-)
+
+const render = Component => {
+    ReactDOM.render(
+        //绑定redux、热加载
+        <Provider store={store}>
+            <AppContainer>
+                <Component />
+            </AppContainer>
+        </Provider>,
+        document.getElementById('root'),
+    )
+}
+
+render(Route);
+
+// Webpack Hot Module Replacement API
+if (module.hot) {
+    module.hot.accept('./router', () => {
+        render(Route);
+    })
+}

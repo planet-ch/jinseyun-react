@@ -1,6 +1,7 @@
 import React from 'react';
 import Show from './../components/show';
 import HandleNum from '../components/handleNum';
+import { Link } from "react-router-dom";
 class ATobShow extends React.Component {
     constructor(props) {
         super(props);
@@ -42,7 +43,14 @@ class ATobShow extends React.Component {
                     temperature={fahrenheit}
                     onTemperatureChange={this.handleFahrenheitChange} />
                 <Show celsius={parseFloat(celsius)} />
-
+                <ul>
+                    <li>
+                        <Link to="/what">go what</Link>
+                    </li>
+                    <li>
+                        <Link to="/shopList">go shopList</Link>
+                    </li>
+                </ul>
             </fieldset>
         );
     }
